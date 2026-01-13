@@ -1,0 +1,364 @@
+.wallet-page {
+    padding: 40px 0;
+    min-height: 80vh;
+    background-color: #f8fafc;
+}
+
+.wallet-header {
+    margin-bottom: 32px;
+}
+
+.wallet-header h1 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 24px;
+}
+
+.balance-card {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    border-radius: 16px;
+    padding: 32px;
+    color: white;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.balance-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.balance-amount {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 8px 0;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.btn-topup,
+.btn-withdraw {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-topup {
+    background: white;
+    color: #2563eb;
+}
+
+.btn-topup:hover {
+    background: #eff6ff;
+    transform: translateY(-2px);
+}
+
+.btn-withdraw {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(4px);
+}
+
+.btn-withdraw:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Tabs */
+.wallet-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.wallet-tabs .tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.wallet-tabs .tab.active {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+/* Transactions */
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.transaction-item {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.tx-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.tx-icon.deposit {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.tx-icon.withdrawal {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+.tx-icon.sale_revenue {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.tx-icon.purchase_refund {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.tx-info {
+    flex: 1;
+}
+
+.tx-desc {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.tx-date {
+    font-size: 0.85rem;
+    color: #94a3b8;
+}
+
+.tx-amount {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.tx-amount.positive {
+    color: #16a34a;
+}
+
+.tx-amount.negative {
+    color: #dc2626;
+}
+
+/* Transaction Status */
+.tx-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.tx-status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.tx-status.completed {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.tx-status.cancelled {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.tx-status.pending,
+.tx-status.pending_payment {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.tx-status.paid {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.tx-status.shipped {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+/* Cancelled Transaction */
+.transaction-item.cancelled {
+    opacity: 0.6;
+    background: #f8fafc;
+}
+
+.transaction-item.cancelled .tx-desc {
+    text-decoration: line-through;
+    color: #94a3b8;
+}
+
+.tx-amount.cancelled-amount {
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+/* Cards */
+.cards-section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.btn-add-card {
+    align-self: flex-start;
+    padding: 10px 20px;
+    background: #0f172a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.saved-card {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 24px;
+    border-radius: 16px;
+    color: white;
+    aspect-ratio: 1.586;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    position: relative;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-type {
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.btn-delete-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-delete-card:hover {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.card-number {
+    font-family: monospace;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-name {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+.card-expiry {
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .balance-card {
+        padding: 24px;
+    }
+
+    .balance-amount {
+        font-size: 2.2rem;
+    }
+
+    .balance-actions {
+        width: 100%;
+    }
+
+    .btn-topup,
+    .btn-withdraw {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .tx-amount {
+        align-self: flex-end;
+    }
+}

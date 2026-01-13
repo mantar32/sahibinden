@@ -1,0 +1,311 @@
+.my-escrows-page {
+    padding: 40px 0;
+    min-height: 80vh;
+    background-color: #f8fafc;
+}
+
+.page-header {
+    margin-bottom: 32px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    color: #1e293b;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #64748b;
+}
+
+/* Tabs */
+.escrow-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    color: #64748b;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.tab:hover {
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+.tab.active {
+    background-color: #059669;
+    color: white;
+}
+
+/* List */
+.escrow-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.no-escrows {
+    text-align: center;
+    padding: 60px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.no-escrows span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.no-escrows h3 {
+    margin-bottom: 8px;
+    color: #334155;
+}
+
+.no-escrows p {
+    color: #64748b;
+    margin-bottom: 24px;
+}
+
+/* Card */
+.escrow-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: box-shadow 0.2s;
+}
+
+.escrow-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.escrow-main {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex: 1;
+}
+
+.escrow-image {
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+}
+
+.escrow-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.escrow-info h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin: 0;
+}
+
+.escrow-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.95rem;
+}
+
+.escrow-price {
+    font-weight: 700;
+    color: #059669;
+}
+
+.escrow-role {
+    background-color: #f1f5f9;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #475569;
+}
+
+.escrow-parties {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+.escrow-date {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* Status & Actions */
+.escrow-status-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.status-badge {
+    padding: 6px 16px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tracking-info {
+    font-size: 0.9rem;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.escrow-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-ship,
+.btn-confirm,
+.btn-cancel {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-ship {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-ship:hover {
+    background-color: #2563eb;
+}
+
+.btn-confirm {
+    background-color: #10b981;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background-color: #059669;
+}
+
+.btn-cancel {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.btn-cancel:hover {
+    background-color: #fecaca;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .escrow-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .escrow-status-section {
+        width: 100%;
+        align-items: flex-start;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 16px;
+    }
+
+    .tracking-info {
+        align-items: flex-start;
+        width: 100%;
+    }
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #1e293b;
+}
+
+.modal-content p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.modal-content .form-group {
+    margin-bottom: 16px;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #334155;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}

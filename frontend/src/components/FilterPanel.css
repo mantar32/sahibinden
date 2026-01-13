@@ -1,0 +1,230 @@
+.filter-panel {
+    background: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    padding: 15px;
+    width: 240px;
+    flex-shrink: 0;
+    align-self: flex-start;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-header h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.filter-reset {
+    background: none;
+    border: none;
+    color: #438fef;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.filter-divider {
+    height: 1px;
+    background: #eee;
+    margin: 15px 0;
+}
+
+.filter-section {
+    margin-bottom: 0;
+}
+
+.filter-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 10px 0;
+    display: block;
+}
+
+/* Category Tree */
+.category-tree {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+}
+
+.category-item a {
+    text-decoration: none;
+    color: #039;
+    /* Standard Link Color */
+    display: block;
+    line-height: 1.4;
+    transition: color 0.2s;
+}
+
+.category-item a:hover {
+    color: #d32f2f;
+    text-decoration: underline;
+}
+
+.main-item a {
+    color: #333;
+}
+
+.parent-link a {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.current-category-title {
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sub-item {
+    padding-left: 12px;
+    position: relative;
+}
+
+.sub-item.active a {
+    color: #000;
+    font-weight: 700;
+    cursor: default;
+    text-decoration: none;
+}
+
+/* Search within results */
+.search-in-results {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+}
+
+.filter-input-text {
+    border: none;
+    width: 100%;
+    padding: 6px 0;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.search-icon-small {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+/* Price Inputs */
+.price-inputs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.filter-input-price {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 6px;
+    font-size: 0.85rem;
+    outline: none;
+    height: 32px;
+    color: #333;
+}
+
+.filter-input-price:focus {
+    border-color: #438fef;
+}
+
+.price-apply-btn {
+    width: 100%;
+    background: #438fef;
+    color: white;
+    border: none;
+    padding: 6px;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.price-apply-btn:hover {
+    background: #2b7bdb;
+}
+
+/* Native Selects for City/Sort */
+.filter-select-native {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    color: #333;
+    background: white;
+    outline: none;
+    cursor: pointer;
+    height: 32px;
+}
+
+.filter-list-container {
+    background: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 2px;
+}
+
+.filter-list-header {
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+/* Sticky Mobile Button */
+.filter-apply-sticky {
+    display: none;
+    width: 100%;
+    padding: 12px;
+    background: #438fef;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .filter-panel {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .filter-apply-sticky {
+        display: block;
+    }
+}
