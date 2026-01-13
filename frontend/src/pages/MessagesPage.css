@@ -254,15 +254,36 @@
 /* Responsive */
 @media (max-width: 768px) {
     .messages-layout {
-        grid-template-columns: 1fr;
+        display: block;
+        /* Switch to block to allowing hiding/showing children */
         height: auto;
     }
 
     .conversations-list {
-        max-height: 300px;
+        display: block;
+        max-height: none;
+        height: auto;
     }
 
     .chat-area {
-        min-height: 400px;
+        display: none;
+        /* Hidden by default on mobile */
+        min-height: 80vh;
+        /* Full height for chat */
+    }
+
+    /* Active State (When user is selected) */
+    .messages-layout.mobile-chat-active .conversations-list {
+        display: none;
+    }
+
+    .messages-layout.mobile-chat-active .chat-area {
+        display: flex;
+        animation: fadeIn 0.2s;
+    }
+
+    .mobile-back-btn {
+        display: block !important;
+        /* Show back button only on mobile */
     }
 }

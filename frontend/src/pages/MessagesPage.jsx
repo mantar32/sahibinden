@@ -129,7 +129,7 @@ const MessagesPage = () => {
                     <h1>💬 Mesajlarım</h1>
                 </div>
 
-                <div className="messages-layout">
+                <div className={`messages-layout ${selectedUser ? 'mobile-chat-active' : ''}`}>
                     {/* Conversations List */}
                     <div className="conversations-list">
                         <h3>Sohbetler</h3>
@@ -170,6 +170,13 @@ const MessagesPage = () => {
                         {selectedUser ? (
                             <>
                                 <div className="chat-header">
+                                    <button
+                                        className="mobile-back-btn"
+                                        onClick={() => setSelectedUser(null)}
+                                        style={{ marginRight: '10px', background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer', display: 'none' }}
+                                    >
+                                        ⬅️
+                                    </button>
                                     <img src={selectedUser.avatar} alt="" />
                                     <span>{selectedUser.name}</span>
                                 </div>

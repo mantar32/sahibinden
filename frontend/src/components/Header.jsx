@@ -169,7 +169,7 @@ const Header = () => {
                         )}
 
                         <Link to="/ilan-ver" className="btn post-ad-btn">
-                            Ücretsiz* İlan Ver
+                            <span className="desktop-only">Ücretsiz* </span>İlan Ver
                         </Link>
                     </div>
                 </div>

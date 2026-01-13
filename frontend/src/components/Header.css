@@ -461,6 +461,10 @@
         /* Hide username, show only avatar */
     }
 
+    .desktop-only {
+        display: none;
+    }
+
     .post-ad-btn {
         height: 32px;
         padding: 0 12px;
