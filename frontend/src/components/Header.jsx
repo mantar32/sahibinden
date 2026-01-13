@@ -147,6 +147,7 @@ const Header = () => {
 
                                 {/* Messages Link with Badge */}
                                 <Link to="/mesajlar" className="header-link messages-link">
+                                    <span className="link-icon">💬</span>
                                     <span className="link-text">Mesajlar</span>
                                     {unreadCount > 0 && (
                                         <span className="unread-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
@@ -154,6 +155,7 @@ const Header = () => {
                                 </Link>
 
                                 <Link to="/favorilerim" className="header-link favorites-link">
+                                    <span className="link-icon">❤️</span>
                                     <span className="link-text">Favorilerim</span>
                                 </Link>
                             </>
