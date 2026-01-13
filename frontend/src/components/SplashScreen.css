@@ -1,0 +1,76 @@
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFD100;
+    /* Sahibinden Yellow */
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    animation: fadeOut 0.5s ease-out 2s forwards;
+}
+
+.splash-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 60px 0;
+}
+
+.splash-logo {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.big-s {
+    font-size: 15rem;
+    font-weight: 900;
+    color: #000;
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    /* Simulate the icon-s effect with a texture or simpler representation */
+    background-image: radial-gradient(#000 20%, transparent 20%);
+    background-size: 10px 10px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.splash-footer {
+    text-align: center;
+}
+
+.brand-name {
+    font-size: 1.8rem;
+    color: #000;
+    font-weight: 800;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.slogan {
+    font-size: 1rem;
+    color: #000;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MobileBottomNav from './components/MobileBottomNav';
+import SplashScreen from './components/SplashScreen';
 import HomePage from './pages/HomePage';
 import CategoryPage from './pages/CategoryPage';
 import ListingDetailPage from './pages/ListingDetailPage';
@@ -21,12 +23,15 @@ import MyEscrowsPage from './pages/MyEscrowsPage';
 import WalletPage from './pages/WalletPage';
 
 function App() {
+    const [showSplash, setShowSplash] = useState(true);
+
     return (
         <AuthProvider>
             <Router>
                 <div className="app">
+                    {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
                     <Header />
-                    <main>
+                    <main style={{ paddingBottom: '60px' }}> {/* Add padding for bottom nav */}
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/kategori/:slug" element={<CategoryPage />} />
@@ -49,6 +54,7 @@ function App() {
                         </Routes>
                     </main>
                     <Footer />
+                    <MobileBottomNav />
                 </div>
             </Router>
         </AuthProvider>

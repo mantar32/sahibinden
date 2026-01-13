@@ -381,57 +381,125 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
-        padding: 12px;
+        padding: 0;
         margin-top: 0;
+        background: #f8fafc;
     }
 
-    /* Convert sidebar to horizontal scrollable strip */
+    /* Redesign Sidebar as Vertical Mobile List */
     .sidebar {
         display: flex;
+        flex-direction: column;
         position: static;
         width: 100%;
         max-height: none;
-        overflow-x: auto;
-        overflow-y: hidden;
+        overflow-y: visible;
+        overflow-x: hidden;
         border: none;
-        padding-bottom: 4px;
+        padding: 0;
         margin-bottom: 8px;
-        background: transparent;
-        /* Hide scrollbar but keep functionality */
-        -webkit-overflow-scrolling: touch;
-        gap: 10px;
-    }
-
-    .sidebar::-webkit-scrollbar {
-        height: 4px;
-        /* Thin horizontal scrollbar */
+        background: #fff;
+        gap: 0;
     }
 
     .sidebar-category {
-        border: 1px solid #e5e5e5;
-        border-radius: 4px;
-        padding: 6px 12px;
-        flex-shrink: 0;
+        border: none;
+        border-bottom: 1px solid #f1f1f1;
+        border-radius: 0;
+        padding: 12px 16px;
+        display: flex;
+        /* Ensure flex for layout */
+        flex-direction: column;
+        /* Subcategories are children */
         background: white;
-        min-width: 120px;
-        /* Ensure clickable area */
+        min-width: 0;
+    }
+
+    .category-header {
+        display: flex;
+        /* Row layout for header */
+        align-items: center;
+        width: 100%;
+        padding: 4px 0;
+    }
+
+    .category-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f0fdf4;
+        /* Light green bg example */
+        color: #059669;
+        font-size: 1.2rem;
+        margin-right: 12px;
+        margin-top: 0;
+        flex-shrink: 0;
+    }
+
+    /* Specific colors for icons can be added via JS dynamic classes if needed, 
+       for now generic colorful look */
+    .sidebar-category:nth-child(1) .category-icon {
+        background: #fee2e2;
+        color: #ef4444;
+    }
+
+    /* Emlak - Red */
+    .sidebar-category:nth-child(2) .category-icon {
+        background: #e0f2fe;
+        color: #0ea5e9;
+    }
+
+    /* Vasıta - Blue */
+    .sidebar-category:nth-child(3) .category-icon {
+        background: #fef3c7;
+        color: #d97706;
+    }
+
+    /* Yedek Parça - Orange */
+    .sidebar-category:nth-child(4) .category-icon {
+        background: #f3e8ff;
+        color: #a855f7;
+    }
+
+    /* İkinci El - Purple */
+
+    .category-name.main-category {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+        flex: 1;
+    }
+
+    .category-header::after {
+        content: '›';
+        font-size: 1.5rem;
+        color: #ccc;
+        margin-left: 8px;
+        line-height: 1;
+    }
+
+    .category-count {
+        display: none;
+        /* Hide count on mobile list for cleaner look */
     }
 
     .subcategory-list {
         display: none;
-        /* Hide subcategories on mobile strip to save space, user clicks main to go */
+        /* Hide subcategories on mobile list */
     }
 
-    .category-header {
-        padding: 0;
+    /* Main Content below sidebar */
+    .main-content {
+        padding: 12px;
     }
 
-    /* Vitrin Grid optimization */
     .vitrin-grid {
         grid-template-columns: repeat(2, 1fr);
-        /* 2 columns for better visibility */
         gap: 8px;
-        padding: 8px;
+        padding: 0;
     }
 
     .vitrin-item {
@@ -443,14 +511,8 @@
     }
 
     .banner-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
-        padding: 0 16px;
-    }
-
-    .banner-text h2 {
-        font-size: 1.2rem;
+        display: none;
+        /* Hide top banner on mobile home to focus on categories */
     }
 }
 
