@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
 import './AuthPages.css';
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const { login, isAuthenticated } = useAuth();
+    const { login, loginWithGoogle, isAuthenticated } = useAuth();
 
     const [formData, setFormData] = useState({
         email: '',
@@ -24,6 +25,23 @@ const LoginPage = () => {
             navigate(redirect);
         }
     }, [isAuthenticated, navigate, redirect]);
+
+    // Google Login Hook
+    const startGoogleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                setLoading(true);
+                await loginWithGoogle(tokenResponse.access_token);
+                navigate(redirect);
+            } catch (error) {
+                console.error(error);
+                setError('Google ile giriş başarısız.');
+            } finally {
+                setLoading(false);
+            }
+        },
+        onError: () => setError('Google ile giriş penceresi kapandı veya hata oluştu.')
+    });
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -118,27 +136,11 @@ const LoginPage = () => {
                     </div>
 
                     <div className="social-buttons">
-                        <button className="google-btn" type="button" onClick={() => {
-                            // Demo amaçlı Google simülasyonu
-                            setLoading(true);
-                            setTimeout(async () => {
-                                try {
-                                    /* Demo Login as Ahmet */
-                                    await login('ahmet@example.com', '123456', true);
-                                    navigate(redirect);
-                                } catch (error) {
-                                    alert('Google simülasyonu başarısız.');
-                                } finally {
-                                    setLoading(false);
-                                }
-                            }, 1000); // 1s simulating delay
-                        }}>
+                        <button className="google-btn" type="button" onClick={() => startGoogleLogin()}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
                             Google ile Giriş Yap
                         </button>
                     </div>
-
-
 
                     <div className="auth-switch">
                         Hesabınız yok mu? <Link to="/kayit">Kayıt Ol</Link>

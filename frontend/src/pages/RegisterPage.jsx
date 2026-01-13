@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../context/AuthContext';
 import './AuthPages.css';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
-    const { register, isAuthenticated } = useAuth();
+    const { register, loginWithGoogle, isAuthenticated } = useAuth();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -22,6 +23,24 @@ const RegisterPage = () => {
             navigate('/');
         }
     }, [isAuthenticated, navigate]);
+
+    // Google Login Hook
+    const startGoogleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                setLoading(true);
+                // For register, we behave same as login: backend will create account if new
+                await loginWithGoogle(tokenResponse.access_token);
+                navigate('/');
+            } catch (error) {
+                console.error(error);
+                setError('Google ile kayıt başarısız.');
+            } finally {
+                setLoading(false);
+            }
+        },
+        onError: () => setError('Google ile kayıt penceresi kapandı veya hata oluştu.')
+    });
 
     const handleChange = (e) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -162,26 +181,7 @@ const RegisterPage = () => {
                     </div>
 
                     <div className="social-buttons">
-                        <button className="google-btn" type="button" onClick={() => {
-                            // Demo amaçlı Google simülasyonu
-                            setLoading(true);
-                            setTimeout(async () => {
-                                try {
-                                    // Normally we would register with Google token, here we simulate login
-                                    await register('Google User', `google_${Date.now()}@example.com`, '123456', '');
-                                    // actually register might fail if email random, let's just use login or register new random
-                                    // Better: just login as 'ahmet' for simplicity as per previous thought, 
-                                    // OR create a genuinely new random user to show 'registration' effect?
-                                    // Let's create a random user to truly simulate 'registration'.
-                                    navigate('/');
-                                } catch (error) {
-                                    // Fallback if register fails (e.g. mock db issue), try login ahmet
-                                    window.location.href = '/giris';
-                                } finally {
-                                    setLoading(false);
-                                }
-                            }, 1000);
-                        }}>
+                        <button className="google-btn" type="button" onClick={() => startGoogleLogin()}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
                             Google ile Kayıt Ol
                         </button>

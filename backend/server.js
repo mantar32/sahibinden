@@ -134,6 +134,55 @@ app.post('/api/auth/register', async (req, res) => {
     }
 });
 
+// Auth
+// Auth
+const axios = require('axios');
+// const { OAuth2Client } = require('google-auth-library'); // Not used for access_token flow
+
+app.post('/api/auth/google', async (req, res) => {
+    try {
+        const { token } = req.body; // This is the access_token
+
+        // Custom verification by fetching user info
+        const googleResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const { sub: googleId, email, name, picture } = googleResponse.data;
+
+        // Find or create user
+        let user = await User.findOne({ where: { email } });
+
+        if (!user) {
+            user = await User.create({
+                id: String(Date.now()),
+                name,
+                email,
+                password: await bcrypt.hash(Math.random().toString(36), 10), // Random password
+                phone: '',
+                avatar: picture,
+                role: 'user',
+                googleId
+            });
+        }
+
+        if (user.isBanned) return res.status(400).json({ message: 'Hesap erişime kapalı.' });
+
+        // Update avatar if missing
+        if (!user.avatar && picture) {
+            user.avatar = picture;
+            await user.save();
+        }
+
+        const jwtToken = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+        res.json({ token: jwtToken, user });
+
+    } catch (error) {
+        console.error('Google Auth Error:', error.response?.data || error.message);
+        res.status(401).json({ message: 'Google doğrulaması başarısız.' });
+    }
+});
+
 app.post('/api/auth/login', async (req, res) => {
     try {
         const { email, password } = req.body;
