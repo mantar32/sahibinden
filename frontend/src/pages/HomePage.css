@@ -378,26 +378,101 @@
 
 @media (max-width: 768px) {
     .main-layout {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+        margin-top: 0;
     }
 
+    /* Convert sidebar to horizontal scrollable strip */
     .sidebar {
-        display: none;
+        display: flex;
+        position: static;
+        width: 100%;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border: none;
+        padding-bottom: 4px;
+        margin-bottom: 8px;
+        background: transparent;
+        /* Hide scrollbar but keep functionality */
+        -webkit-overflow-scrolling: touch;
+        gap: 10px;
     }
 
+    .sidebar::-webkit-scrollbar {
+        height: 4px;
+        /* Thin horizontal scrollbar */
+    }
+
+    .sidebar-category {
+        border: 1px solid #e5e5e5;
+        border-radius: 4px;
+        padding: 6px 12px;
+        flex-shrink: 0;
+        background: white;
+        min-width: 120px;
+        /* Ensure clickable area */
+    }
+
+    .subcategory-list {
+        display: none;
+        /* Hide subcategories on mobile strip to save space, user clicks main to go */
+    }
+
+    .category-header {
+        padding: 0;
+    }
+
+    /* Vitrin Grid optimization */
     .vitrin-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns for better visibility */
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .vitrin-item {
+        border-radius: 4px;
+    }
+
+    .vitrin-title {
+        font-size: 0.75rem;
     }
 
     .banner-content {
         flex-direction: column;
         text-align: center;
-        gap: 16px;
+        gap: 12px;
+        padding: 0 16px;
+    }
+
+    .banner-text h2 {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 480px) {
     .vitrin-grid {
         grid-template-columns: repeat(2, 1fr);
+        /* Keep 2 columns even on small screens */
+    }
+
+    .listing-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .listing-thumb {
+        width: 100%;
+        height: 140px;
+        margin: 0;
+    }
+
+    .listing-details {
+        width: 100%;
     }
 }

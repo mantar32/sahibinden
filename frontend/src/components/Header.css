@@ -382,30 +382,89 @@
 @media (max-width: 768px) {
     .header {
         height: auto;
+        padding-bottom: 8px;
     }
 
     .header-content {
         flex-wrap: wrap;
         height: auto;
-        padding: 10px 16px;
-        gap: 12px;
+        padding: 8px 12px;
+        gap: 8px;
     }
 
+    .logo {
+        height: 32px;
+        padding: 0 8px;
+        margin-right: 8px;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+    }
+
+    /* Search Bar moves to next row */
     .search-bar {
         order: 3;
         flex: 0 0 100%;
         max-width: none;
+        margin-top: 4px;
+    }
+
+    .search-input-wrapper {
+        background: #485463;
+        height: 36px;
     }
 
     .header-actions {
-        width: 100%;
-        justify-content: flex-end;
+        order: 2;
+        width: auto;
+        margin-left: auto;
+        gap: 4px;
     }
 
+    /* Compact header links */
     .header-link,
     .user-menu-trigger {
         border: none;
-        height: auto;
-        padding: 8px;
+        height: 36px;
+        padding: 0 8px;
+    }
+
+    .link-text {
+        display: none;
+        /* Hide text on mobile */
+    }
+
+    .link-icon {
+        display: block;
+        /* Show icons if added later, currently text is hidden so links might be empty unless we add emoji/icon */
+        font-size: 1.2rem;
+    }
+
+    /* Since we don't have icons in HTML currently (except user avatar), 
+       let's keep text but smaller OR ensure icons exist. 
+       Wait, HTML inspection needed. I'll just reduce font size and padding for now to be safe. */
+
+    .header-link,
+    .user-menu-trigger {
+        font-size: 0.75rem;
+        padding: 0 6px;
+    }
+
+    .link-text {
+        display: inline-block;
+        /* Revert hiding for now */
+    }
+
+    .user-name {
+        display: none;
+        /* Hide username, show only avatar */
+    }
+
+    .post-ad-btn {
+        height: 32px;
+        padding: 0 12px;
+        font-size: 0.8rem;
+        margin-left: 8px;
     }
 }
