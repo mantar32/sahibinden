@@ -113,15 +113,7 @@ const LoginPage = () => {
                         </button>
                     </form>
 
-                    <div className="auth-divider">
-                        <span>veya</span>
-                    </div>
 
-                    <div className="demo-accounts">
-                        <p>Demo hesapları:</p>
-                        <p><strong>Kullanıcı:</strong> ahmet@example.com / 123456</p>
-                        <p><strong>Admin:</strong> admin@ilanplatformu.com / 123456</p>
-                    </div>
 
                     <div className="auth-switch">
                         Hesabınız yok mu? <Link to="/kayit">Kayıt Ol</Link>
