@@ -167,6 +167,41 @@
     font-size: 0.85rem;
 }
 
+/* Social Buttons */
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid var(--gray-300);
+    border-radius: var(--radius);
+    padding: 12px;
+    color: var(--gray-700);
+    font-weight: 500;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.google-btn:hover {
+    background: var(--gray-50);
+    border-color: var(--gray-400);
+}
+
+.google-btn img {
+    width: 20px;
+    height: 20px;
+}
+
 /* Demo Accounts */
 .demo-accounts {
     background: var(--gray-50);

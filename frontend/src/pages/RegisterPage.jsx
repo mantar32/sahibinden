@@ -157,6 +157,17 @@ const RegisterPage = () => {
                         </button>
                     </form>
 
+                    <div className="auth-divider">
+                        <span>veya</span>
+                    </div>
+
+                    <div className="social-buttons">
+                        <button className="google-btn" onClick={() => alert('Google ile kayıt entegrasyonu için Firebase/OAuth yapılandırması gereklidir.')}>
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
+                            Google ile Kayıt Ol
+                        </button>
+                    </div>
+
                     <div className="auth-switch">
                         Zaten hesabınız var mı? <Link to="/giris">Giriş Yap</Link>
                     </div>
