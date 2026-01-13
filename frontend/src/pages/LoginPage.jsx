@@ -118,7 +118,21 @@ const LoginPage = () => {
                     </div>
 
                     <div className="social-buttons">
-                        <button className="google-btn" onClick={() => alert('Google ile giriş entegrasyonu için Firebase/OAuth yapılandırması gereklidir.')}>
+                        <button className="google-btn" type="button" onClick={() => {
+                            // Demo amaçlı Google simülasyonu
+                            setLoading(true);
+                            setTimeout(async () => {
+                                try {
+                                    /* Demo Login as Ahmet */
+                                    await login('ahmet@example.com', '123456', true);
+                                    navigate(redirect);
+                                } catch (error) {
+                                    alert('Google simülasyonu başarısız.');
+                                } finally {
+                                    setLoading(false);
+                                }
+                            }, 1000); // 1s simulating delay
+                        }}>
                             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" />
                             Google ile Giriş Yap
                         </button>
