@@ -85,13 +85,34 @@ async function seedData() {
         await Listing.bulkCreate([
             { id: '1', title: '2020 Model BMW 320i', description: 'Hatasız boyasız', price: 2850000, category: 'Vasıta', subCategory: 'Otomobil', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'], sellerId: '1', status: 'approved', views: 1250, isFeatured: true, createdAt: '2024-12-01' },
             { id: '2', title: 'Kadıköy Satılık 3+1', description: 'Deniz manzaralı', price: 8500000, category: 'Emlak', subCategory: 'Konut', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'], sellerId: '2', status: 'approved', views: 890, isFeatured: true, createdAt: '2024-12-05' },
-            { id: '3', title: 'iPhone 15 Pro Max', description: '1 ay kullanıldı', price: 68000, category: 'Elektronik', subCategory: 'Telefon', city: 'Ankara', district: 'Çankaya', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800'], sellerId: '1', status: 'approved', views: 2100, isFeatured: true, createdAt: '2024-12-10' }
+            { id: '3', title: 'iPhone 15 Pro Max', description: '1 ay kullanıldı', price: 68000, category: 'İkinci El ve Sıfır Alışveriş', subCategory: 'Cep Telefonu & Aksesuar', city: 'Ankara', district: 'Çankaya', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800'], sellerId: '1', status: 'approved', views: 2100, isFeatured: true, createdAt: '2024-12-10' }
         ]);
         console.log('✅ Seeding completed.');
     }
 }
 
-// ==================== MIDDLEWARE ====================
+// Migration to fix existing data on startup
+async function runMigrations() {
+    try {
+        const iphone = await Listing.findByPk('3');
+        if (iphone && iphone.category === 'Elektronik') {
+            console.log('🔄 Migrating iPhone listing category...');
+            iphone.category = 'İkinci El ve Sıfır Alışveriş';
+            iphone.subCategory = 'Cep Telefonu & Aksesuar';
+            iphone.isSold = false; // Ensure it's not hidden
+            await iphone.save();
+            console.log('✅ iPhone listing migration completed.');
+        }
+    } catch (error) {
+        console.error('Migration error:', error);
+    }
+}
+
+// Call migrations after connection
+sequelize.sync().then(() => {
+    seedData();
+    runMigrations();
+});
 const authMiddleware = async (req, res, next) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     if (!token) return res.status(401).json({ message: 'Token bulunamadı.' });
