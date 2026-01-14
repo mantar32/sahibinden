@@ -22,6 +22,7 @@ import PaymentPage from './pages/PaymentPage';
 import PromoteListingPage from './pages/PromoteListingPage';
 import EscrowPage from './pages/EscrowPage';
 import MyEscrowsPage from './pages/MyEscrowsPage';
+import ComparePage from './pages/ComparePage';
 import WalletPage from './pages/WalletPage';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                             <main style={{ paddingBottom: '60px' }}>
                                 <Routes>
                                     <Route path="/" element={<HomePage />} />
+                                    <Route path="/karsilastir" element={<ComparePage />} />
                                     <Route path="/kategori/:slug" element={<CategoryPage />} />
                                     <Route path="/ilan/:id/:slug?" element={<ListingDetailPage />} />
                                     <Route path="/ilan-ver" element={<CreateListingPage />} />

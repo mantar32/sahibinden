@@ -6,8 +6,13 @@ export const useCompare = () => useContext(CompareContext);
 
 export const CompareProvider = ({ children }) => {
     const [compareList, setCompareList] = useState(() => {
-        const saved = localStorage.getItem('compareList');
-        return saved ? JSON.parse(saved) : [];
+        try {
+            const saved = localStorage.getItem('compareList');
+            return saved ? JSON.parse(saved) : [];
+        } catch (e) {
+            console.error('Failed to parse compareList:', e);
+            return [];
+        }
     });
 
     useEffect(() => {
