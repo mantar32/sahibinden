@@ -3,6 +3,7 @@ import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { getListings, getCategories, getCities } from '../utils/api';
 import ListingCard from '../components/ListingCard';
 import FilterPanel from '../components/FilterPanel';
+import SEO from '../components/SEO';
 import './CategoryPage.css';
 
 const CategoryPage = () => {
@@ -130,6 +131,10 @@ const CategoryPage = () => {
 
     return (
         <div className="category-page">
+            <SEO
+                title={`${pageTitle}${filters.subCategory ? ` - ${filters.subCategory}` : ''}`}
+                description={`${pageTitle} kategorisindeki en yeni ilanları, fiyatları ve fırsatları inceleyin. Sahibinden satılık, kiralık seçenekler.`}
+            />
             <div className="container">
                 {/* Breadcrumb */}
                 <nav className="breadcrumb">

@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getListing, sendMessage, incrementView } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import ImageGallery from '../components/ImageGallery';
+import SEO from '../components/SEO';
 import './ListingDetailPage.css';
 
 const ListingDetailPage = () => {
@@ -155,6 +156,10 @@ const ListingDetailPage = () => {
 
     return (
         <div className="listing-detail-page">
+            <SEO
+                title={listing.title}
+                description={`Sahibinden ${listing.category} - ${listing.title} ilanını inceleyin. Fiyat: ${formatPrice(listing.price)}`}
+            />
             <div className="container">
                 {/* Breadcrumb */}
                 <nav className="breadcrumb">

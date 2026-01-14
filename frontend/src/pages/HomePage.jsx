@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 import { getCategories, getListings } from '../utils/api';
 import './HomePage.css';
 
@@ -63,6 +64,7 @@ const HomePage = () => {
 
     return (
         <div className="home-page sahibinden-style">
+            <SEO />
             {/* Top Banner */}
             <div className="top-banner">
                 <div className="container banner-content">

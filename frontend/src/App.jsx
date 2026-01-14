@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileBottomNav from './components/MobileBottomNav';
@@ -26,38 +28,42 @@ function App() {
     const [showSplash, setShowSplash] = useState(true);
 
     return (
-        <AuthProvider>
-            <Router>
-                <div className="app">
-                    {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
-                    <Header />
-                    <main style={{ paddingBottom: '60px' }}> {/* Add padding for bottom nav */}
-                        <Routes>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/kategori/:slug" element={<CategoryPage />} />
-                            <Route path="/ilan/:id/:slug?" element={<ListingDetailPage />} />
-                            <Route path="/ilan-ver" element={<CreateListingPage />} />
-                            <Route path="/ilan-duzenle/:id" element={<EditListingPage />} />
-                            <Route path="/profil" element={<ProfilePage />} />
-                            <Route path="/profilim" element={<ProfilePage />} />
-                            <Route path="/favorilerim" element={<FavoritesPage />} />
-                            <Route path="/mesajlar" element={<MessagesPage />} />
-                            <Route path="/odeme" element={<PaymentPage />} />
-                            <Route path="/vitrin/:id" element={<PromoteListingPage />} />
-                            <Route path="/param-guvende/:id" element={<EscrowPage />} />
-                            <Route path="/param-guvende/islem/:escrowId" element={<EscrowPage />} />
-                            <Route path="/guvenli-islemlerim" element={<MyEscrowsPage />} />
-                            <Route path="/cuzdanim" element={<WalletPage />} />
-                            <Route path="/giris" element={<LoginPage />} />
-                            <Route path="/kayit" element={<RegisterPage />} />
-                            <Route path="/admin" element={<AdminPage />} />
-                        </Routes>
-                    </main>
-                    <Footer />
-                    <MobileBottomNav />
-                </div>
-            </Router>
-        </AuthProvider>
+        <HelmetProvider>
+            <ThemeProvider>
+                <AuthProvider>
+                    <Router>
+                        <div className="app">
+                            {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+                            <Header />
+                            <main style={{ paddingBottom: '60px' }}> {/* Add padding for bottom nav */}
+                                <Routes>
+                                    <Route path="/" element={<HomePage />} />
+                                    <Route path="/kategori/:slug" element={<CategoryPage />} />
+                                    <Route path="/ilan/:id/:slug?" element={<ListingDetailPage />} />
+                                    <Route path="/ilan-ver" element={<CreateListingPage />} />
+                                    <Route path="/ilan-duzenle/:id" element={<EditListingPage />} />
+                                    <Route path="/profil" element={<ProfilePage />} />
+                                    <Route path="/profilim" element={<ProfilePage />} />
+                                    <Route path="/favorilerim" element={<FavoritesPage />} />
+                                    <Route path="/mesajlar" element={<MessagesPage />} />
+                                    <Route path="/odeme" element={<PaymentPage />} />
+                                    <Route path="/vitrin/:id" element={<PromoteListingPage />} />
+                                    <Route path="/param-guvende/:id" element={<EscrowPage />} />
+                                    <Route path="/param-guvende/islem/:escrowId" element={<EscrowPage />} />
+                                    <Route path="/guvenli-islemlerim" element={<MyEscrowsPage />} />
+                                    <Route path="/cuzdanim" element={<WalletPage />} />
+                                    <Route path="/giris" element={<LoginPage />} />
+                                    <Route path="/kayit" element={<RegisterPage />} />
+                                    <Route path="/admin" element={<AdminPage />} />
+                                </Routes>
+                            </main>
+                            <Footer />
+                            <MobileBottomNav />
+                        </div>
+                    </Router>
+                </AuthProvider>
+            </ThemeProvider>
+        </HelmetProvider>
     );
 }
 
