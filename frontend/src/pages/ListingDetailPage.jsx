@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getListing, sendMessage, incrementView } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import { useCompare } from '../context/CompareContext';
 import ImageGallery from '../components/ImageGallery';
 import MapComponent from '../components/MapComponent';
 import SEO from '../components/SEO';
@@ -11,6 +12,7 @@ const ListingDetailPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { user, isAuthenticated, toggleFavorite } = useAuth();
+    const { addToCompare, removeFromCompare, compareList } = useCompare();
     const viewIncremented = useRef(false); // Prevent double increment
 
     const [listing, setListing] = useState(null);
@@ -23,6 +25,16 @@ const ListingDetailPage = () => {
     const [messageSent, setMessageSent] = useState(false);
 
     const isFavorite = user?.favorites?.includes(id);
+    const isInCompare = compareList?.some(item => item.id === id);
+
+    const handleCompare = () => {
+        if (isInCompare) {
+            removeFromCompare(id);
+        } else {
+            const result = addToCompare(listing);
+            if (!result.success) alert(result.message);
+        }
+    };
 
     useEffect(() => {
         fetchListing();
@@ -252,6 +264,12 @@ const ListingDetailPage = () => {
                                     onClick={handleFavorite}
                                 >
                                     {isFavorite ? '❤️ Favorilerde' : '🤍 Favorilere Ekle'}
+                                </button>
+                                <button
+                                    className={`btn btn-compare ${isInCompare ? 'active' : ''}`}
+                                    onClick={handleCompare}
+                                >
+                                    {isInCompare ? '⚖️ Listede' : '⚖️ Karşılaştır'}
                                 </button>
                                 <button className="btn btn-share" onClick={handleShare}>
                                     {copied ? '✓ Kopyalandı' : '🔗 Paylaş'}

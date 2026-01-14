@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCompare } from '../context/CompareContext';
 import './ListingCard.css';
 
 const ListingCard = ({ listing, onFavoriteToggle }) => {
@@ -53,6 +54,22 @@ const ListingCard = ({ listing, onFavoriteToggle }) => {
             .replace(/^-|-$/g, '');
     };
 
+    const { addToCompare, removeFromCompare, compareList } = useCompare();
+    const isInCompare = compareList.some(item => item.id === listing.id);
+
+    const handleCompareClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (isInCompare) {
+            removeFromCompare(listing.id);
+        } else {
+            const result = addToCompare(listing);
+            if (!result.success) {
+                alert(result.message);
+            }
+        }
+    };
+
     return (
         <Link
             to={`/ilan/${listing.id}/${createSlug(listing.title)}`}
@@ -71,13 +88,24 @@ const ListingCard = ({ listing, onFavoriteToggle }) => {
                 {listing.isFeatured && !listing.isSold && (
                     <span className="featured-badge">⭐ Vitrin</span>
                 )}
-                <button
-                    className={`favorite-btn ${isFavorite ? 'is-favorite' : ''}`}
-                    onClick={handleFavoriteClick}
-                    aria-label={isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}
-                >
-                    {isFavorite ? '❤️' : '🤍'}
-                </button>
+
+                <div className="card-actions">
+                    <button
+                        className={`action-btn favorite-btn ${isFavorite ? 'active' : ''}`}
+                        onClick={handleFavoriteClick}
+                        title={isFavorite ? 'Favorilerden çıkar' : 'Favorilere ekle'}
+                    >
+                        {isFavorite ? '❤️' : '🤍'}
+                    </button>
+                    <button
+                        className={`action-btn compare-btn ${isInCompare ? 'active' : ''}`}
+                        onClick={handleCompareClick}
+                        title={isInCompare ? 'Karşılaştırmadan çıkar' : 'Karşılaştır'}
+                    >
+                        {isInCompare ? '⚖️' : '⚖️+'}
+                    </button>
+                </div>
+
                 <span className="image-count">
                     📷 {listing.images?.length || 0}
                 </span>

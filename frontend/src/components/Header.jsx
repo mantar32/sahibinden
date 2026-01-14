@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCompare } from '../context/CompareContext';
 import { getUnreadCount } from '../utils/api';
 import './Header.css';
 
 const Header = () => {
     const { user, isAuthenticated, isAdmin, logout } = useAuth();
+    const { compareList } = useCompare();
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [unreadCount, setUnreadCount] = useState(0);
@@ -158,6 +159,14 @@ const Header = () => {
                                     <span className="link-icon">❤️</span>
                                     <span className="link-text">Favorilerim</span>
                                 </Link>
+
+                                {compareList.length > 0 && (
+                                    <Link to="/karsilastir" className="header-link compare-link">
+                                        <span className="link-icon">⚖️</span>
+                                        <span className="link-text">Karşılaştır</span>
+                                        <span className="unread-badge compare-badge">{compareList.length}</span>
+                                    </Link>
+                                )}
                             </>
                         ) : (
                             <div className="auth-links">
