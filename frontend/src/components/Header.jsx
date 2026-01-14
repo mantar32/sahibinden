@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext';
 import { getUnreadCount } from '../utils/api';
 import './Header.css';
 
 const Header = () => {
     const { user, isAuthenticated, isAdmin, logout } = useAuth();
-    const { theme, toggleTheme } = useTheme();
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [unreadCount, setUnreadCount] = useState(0);
@@ -81,22 +79,6 @@ const Header = () => {
 
                     {/* Right Actions */}
                     <div className="header-actions">
-                        <button
-                            onClick={toggleTheme}
-                            className="theme-toggle"
-                            aria-label="Toggle Dark Mode"
-                            style={{
-                                background: 'transparent',
-                                border: 'none',
-                                cursor: 'pointer',
-                                fontSize: '1.2rem',
-                                padding: '8px',
-                                marginRight: '10px'
-                            }}
-                        >
-                            {theme === 'dark' ? '☀️' : '🌙'}
-                        </button>
-
                         {isAuthenticated ? (
                             <>
                                 <div className="user-menu-wrapper">
