@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { getCategories, getCities, createListing, checkListingEligibility, getPackages } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
+import MapComponent from '../components/MapComponent';
 import './CreateListingPage.css';
 
 const CreateListingPage = () => {
@@ -408,18 +409,21 @@ const CreateListingPage = () => {
                                         <p className="location-error">⚠️ {locationError}</p>
                                     )}
 
-                                    {formData.latitude && formData.longitude && (
-                                        <div className="location-preview">
-                                            <iframe
-                                                title="Konum Önizleme"
-                                                src={`https://www.google.com/maps?q=${formData.latitude},${formData.longitude}&output=embed`}
-                                                width="100%"
-                                                height="200"
-                                                style={{ border: 0, borderRadius: '8px' }}
-                                                loading="lazy"
-                                            ></iframe>
-                                        </div>
-                                    )}
+                                    <div className="location-preview" style={{ height: '300px', marginTop: '15px' }}>
+                                        <MapComponent
+                                            position={formData.latitude && formData.longitude ? [formData.latitude, formData.longitude] : null}
+                                            onLocationSelect={(latlng) => {
+                                                setFormData(prev => ({
+                                                    ...prev,
+                                                    latitude: latlng.lat,
+                                                    longitude: latlng.lng
+                                                }));
+                                            }}
+                                        />
+                                    </div>
+                                    <p className="field-info" style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: '#666' }}>
+                                        * Harita üzerinde tıklayarak konumunuzu tam olarak işaretleyebilirsiniz.
+                                    </p>
                                 </div>
                             </div>
                         )}

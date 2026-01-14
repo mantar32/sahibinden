@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getListing, sendMessage, incrementView } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import ImageGallery from '../components/ImageGallery';
+import MapComponent from '../components/MapComponent';
 import SEO from '../components/SEO';
 import './ListingDetailPage.css';
 
@@ -144,15 +145,7 @@ const ListingDetailPage = () => {
         );
     }
 
-    // Google Maps URL oluştur
-    const getMapUrl = () => {
-        if (listing.latitude && listing.longitude) {
-            return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8&q=${listing.latitude},${listing.longitude}&zoom=15`;
-        }
-        // Şehir ve ilçe ile arama
-        const location = encodeURIComponent(`${listing.city}${listing.district ? ', ' + listing.district : ''}, Turkey`);
-        return `https://www.google.com/maps?q=${location}&output=embed`;
-    };
+
 
     return (
         <div className="listing-detail-page">
@@ -238,17 +231,11 @@ const ListingDetailPage = () => {
                                 <span className="location-icon">📍</span>
                                 <span>{listing.city}{listing.district && `, ${listing.district}`}</span>
                             </div>
-                            <div className="map-container">
-                                <iframe
-                                    title="Konum Haritası"
-                                    src={getMapUrl()}
-                                    width="100%"
-                                    height="300"
-                                    style={{ border: 0, borderRadius: '12px' }}
-                                    allowFullScreen=""
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                ></iframe>
+                            <div className="map-container" style={{ height: '300px' }}>
+                                <MapComponent
+                                    position={listing.latitude && listing.longitude ? [listing.latitude, listing.longitude] : null}
+                                    readOnly={true}
+                                />
                             </div>
                         </div>
                     </div>

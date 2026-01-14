@@ -85,7 +85,7 @@ async function seedData() {
         await Listing.bulkCreate([
             { id: '1', title: '2020 Model BMW 320i', description: 'Hatasız boyasız', price: 2850000, category: 'Vasıta', subCategory: 'Otomobil', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'], sellerId: '1', status: 'approved', views: 1250, isFeatured: true, createdAt: '2024-12-01' },
             { id: '2', title: 'Kadıköy Satılık 3+1', description: 'Deniz manzaralı', price: 8500000, category: 'Emlak', subCategory: 'Konut', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'], sellerId: '2', status: 'approved', views: 890, isFeatured: true, createdAt: '2024-12-05' },
-            { id: '3', title: 'iPhone 15 Pro Max', description: '1 ay kullanıldı', price: 68000, category: 'İkinci El ve Sıfır Alışveriş', subCategory: 'Cep Telefonu & Aksesuar', city: 'Ankara', district: 'Çankaya', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800'], sellerId: '1', status: 'approved', views: 2100, isFeatured: true, createdAt: '2024-12-10' }
+            { id: '3', title: 'iPhone 15 Pro Max', description: '1 ay kullanıldı', price: 68000, category: 'İkinci El ve Sıfır Alışveriş', subCategory: 'Cep Telefonu & Aksesuar', city: 'Ankara', district: 'Çankaya', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800'], sellerId: '1', status: 'approved', views: 2100, isFeatured: true, createdAt: '2024-12-10', latitude: 39.9334, longitude: 32.8597 }
         ]);
         console.log('✅ Seeding completed.');
     }
@@ -791,6 +791,8 @@ app.put('/api/listings/:id', authMiddleware, async (req, res) => {
     if (city) listing.city = city;
     if (district) listing.district = district;
     if (images) listing.images = images;
+    if (req.body.latitude) listing.latitude = parseFloat(req.body.latitude);
+    if (req.body.longitude) listing.longitude = parseFloat(req.body.longitude);
 
     // If listing was approved and content changed, set to pending for re-review
     if (listing.status === 'approved' && (title || description || price)) {
