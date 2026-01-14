@@ -30,7 +30,10 @@ const CreateListingPage = () => {
         district: '',
         images: [],
         latitude: null,
-        longitude: null
+        longitude: null,
+        year: '',
+        km: '',
+        color: ''
     });
 
     const [imageUrls, setImageUrls] = useState(['', '', '', '', '']);
@@ -329,6 +332,59 @@ const CreateListingPage = () => {
                                         maxLength={5000}
                                     />
                                     <span className="char-count">{formData.description.length}/5000</span>
+                                </div>
+
+                                {/* Vehicle Specific Fields */}
+                                {formData.category === 'Vasıta' && (
+                                    <div className="form-row">
+                                        <div className="form-group">
+                                            <label className="form-label">Yıl</label>
+                                            <input
+                                                type="number"
+                                                name="year"
+                                                className="form-input"
+                                                placeholder="Örn: 2020"
+                                                value={formData.year}
+                                                onChange={handleChange}
+                                                min="1900"
+                                                max={new Date().getFullYear()}
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label">KM</label>
+                                            <input
+                                                type="number"
+                                                name="km"
+                                                className="form-input"
+                                                placeholder="Örn: 50000"
+                                                value={formData.km}
+                                                onChange={handleChange}
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Color Field (General) */}
+                                <div className="form-group">
+                                    <label className="form-label">Renk</label>
+                                    <select
+                                        name="color"
+                                        className="form-select"
+                                        value={formData.color}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="">Renk Seçin</option>
+                                        <option value="Beyaz">Beyaz</option>
+                                        <option value="Siyah">Siyah</option>
+                                        <option value="Gri">Gri</option>
+                                        <option value="Kırmızı">Kırmızı</option>
+                                        <option value="Mavi">Mavi</option>
+                                        <option value="Yeşil">Yeşil</option>
+                                        <option value="Sarı">Sarı</option>
+                                        <option value="Turuncu">Turuncu</option>
+                                        <option value="Kahverengi">Kahverengi</option>
+                                        <option value="Diğer">Diğer</option>
+                                    </select>
                                 </div>
                             </div>
                         )}

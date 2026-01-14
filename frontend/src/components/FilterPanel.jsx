@@ -107,6 +107,85 @@ const FilterPanel = ({
                 <button className="price-apply-btn" onClick={() => onFilterChange(filters)}>
                     Ara
                 </button>
+                <button className="price-apply-btn" onClick={() => onFilterChange(filters)}>
+                    Ara
+                </button>
+            </div>
+
+            <div className="filter-divider"></div>
+
+            {/* Year Range - Only for Vasıta */}
+            {(currentCategory === 'Vasıta' || !currentCategory) && (
+                <>
+                    <div className="filter-section">
+                        <h4 className="filter-title">Yıl</h4>
+                        <div className="price-inputs">
+                            <input
+                                type="number"
+                                placeholder="Min"
+                                className="filter-input-price"
+                                value={filters.minYear || ''}
+                                onChange={(e) => handleChange('minYear', e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max"
+                                className="filter-input-price"
+                                value={filters.maxYear || ''}
+                                onChange={(e) => handleChange('maxYear', e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="filter-divider"></div>
+                </>
+            )}
+
+            {/* KM Range - Only for Vasıta */}
+            {(currentCategory === 'Vasıta' || !currentCategory) && (
+                <>
+                    <div className="filter-section">
+                        <h4 className="filter-title">KM</h4>
+                        <div className="price-inputs">
+                            <input
+                                type="number"
+                                placeholder="Min"
+                                className="filter-input-price"
+                                value={filters.minKm || ''}
+                                onChange={(e) => handleChange('minKm', e.target.value)}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max"
+                                className="filter-input-price"
+                                value={filters.maxKm || ''}
+                                onChange={(e) => handleChange('maxKm', e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="filter-divider"></div>
+                </>
+            )}
+
+            {/* Color Filter */}
+            <div className="filter-section">
+                <h4 className="filter-title">Renk</h4>
+                <select
+                    className="filter-select-native"
+                    value={filters.color || ''}
+                    onChange={(e) => handleChange('color', e.target.value)}
+                >
+                    <option value="">Tüm Renkler</option>
+                    <option value="Beyaz">Beyaz</option>
+                    <option value="Siyah">Siyah</option>
+                    <option value="Gri">Gri</option>
+                    <option value="Kırmızı">Kırmızı</option>
+                    <option value="Mavi">Mavi</option>
+                    <option value="Yeşil">Yeşil</option>
+                    <option value="Sarı">Sarı</option>
+                    <option value="Turuncu">Turuncu</option>
+                    <option value="Kahverengi">Kahverengi</option>
+                    <option value="Diğer">Diğer</option>
+                </select>
             </div>
 
             <div className="filter-divider"></div>

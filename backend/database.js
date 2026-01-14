@@ -156,6 +156,18 @@ const Listing = sequelize.define('Listing', {
     longitude: {
         type: DataTypes.FLOAT,
         allowNull: true
+    },
+    year: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    km: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+    },
+    color: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 

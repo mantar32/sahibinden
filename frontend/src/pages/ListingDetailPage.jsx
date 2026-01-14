@@ -233,6 +233,24 @@ const ListingDetailPage = () => {
                                     <span className="detail-label">Görüntülenme</span>
                                     <span className="detail-value">{listing.views} kez</span>
                                 </div>
+                                {listing.year && (
+                                    <div className="detail-item">
+                                        <span className="detail-label">Yıl</span>
+                                        <span className="detail-value">{listing.year}</span>
+                                    </div>
+                                )}
+                                {listing.km && (
+                                    <div className="detail-item">
+                                        <span className="detail-label">KM</span>
+                                        <span className="detail-value">{listing.km.toLocaleString('tr-TR')}</span>
+                                    </div>
+                                )}
+                                {listing.color && (
+                                    <div className="detail-item">
+                                        <span className="detail-label">Renk</span>
+                                        <span className="detail-value">{listing.color}</span>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -349,56 +367,58 @@ const ListingDetailPage = () => {
             </div>
 
             {/* Message Modal */}
-            {showMessageModal && (
-                <div className="modal-overlay" onClick={() => setShowMessageModal(false)}>
-                    <div className="message-modal" onClick={e => e.stopPropagation()}>
-                        <div className="modal-header">
-                            <h3>💬 Satıcıya Mesaj Gönder</h3>
-                            <button className="modal-close" onClick={() => setShowMessageModal(false)}>×</button>
-                        </div>
-
-                        <div className="modal-body">
-                            <div className="message-listing-info">
-                                <img src={listing.images?.[0]} alt="" />
-                                <div>
-                                    <strong>{listing.title}</strong>
-                                    <span>{formatPrice(listing.price)}</span>
-                                </div>
+            {
+                showMessageModal && (
+                    <div className="modal-overlay" onClick={() => setShowMessageModal(false)}>
+                        <div className="message-modal" onClick={e => e.stopPropagation()}>
+                            <div className="modal-header">
+                                <h3>💬 Satıcıya Mesaj Gönder</h3>
+                                <button className="modal-close" onClick={() => setShowMessageModal(false)}>×</button>
                             </div>
 
-                            <div className="message-to">
-                                <span>Alıcı:</span>
-                                <img src={listing.seller?.avatar} alt="" />
-                                <span>{listing.seller?.name}</span>
-                            </div>
-
-                            {messageSent ? (
-                                <div className="message-success">
-                                    ✅ Mesajınız başarıyla gönderildi!
+                            <div className="modal-body">
+                                <div className="message-listing-info">
+                                    <img src={listing.images?.[0]} alt="" />
+                                    <div>
+                                        <strong>{listing.title}</strong>
+                                        <span>{formatPrice(listing.price)}</span>
+                                    </div>
                                 </div>
-                            ) : (
-                                <>
-                                    <textarea
-                                        className="message-textarea"
-                                        value={messageText}
-                                        onChange={(e) => setMessageText(e.target.value)}
-                                        placeholder="Mesajınızı yazın..."
-                                        rows={5}
-                                    />
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={handleSendMessage}
-                                        disabled={messageSending || !messageText.trim()}
-                                    >
-                                        {messageSending ? 'Gönderiliyor...' : '📤 Mesaj Gönder'}
-                                    </button>
-                                </>
-                            )}
+
+                                <div className="message-to">
+                                    <span>Alıcı:</span>
+                                    <img src={listing.seller?.avatar} alt="" />
+                                    <span>{listing.seller?.name}</span>
+                                </div>
+
+                                {messageSent ? (
+                                    <div className="message-success">
+                                        ✅ Mesajınız başarıyla gönderildi!
+                                    </div>
+                                ) : (
+                                    <>
+                                        <textarea
+                                            className="message-textarea"
+                                            value={messageText}
+                                            onChange={(e) => setMessageText(e.target.value)}
+                                            placeholder="Mesajınızı yazın..."
+                                            rows={5}
+                                        />
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={handleSendMessage}
+                                            disabled={messageSending || !messageText.trim()}
+                                        >
+                                            {messageSending ? 'Gönderiliyor...' : '📤 Mesaj Gönder'}
+                                        </button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 

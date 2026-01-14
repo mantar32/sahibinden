@@ -83,7 +83,7 @@ async function seedData() {
         ]);
 
         await Listing.bulkCreate([
-            { id: '1', title: '2020 Model BMW 320i', description: 'Hatasız boyasız', price: 2850000, category: 'Vasıta', subCategory: 'Otomobil', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'], sellerId: '1', status: 'approved', views: 1250, isFeatured: true, createdAt: '2024-12-01' },
+            { id: '1', title: '2020 Model BMW 320i', description: 'Hatasız boyasız', price: 2850000, category: 'Vasıta', subCategory: 'Otomobil', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800'], sellerId: '1', status: 'approved', views: 1250, isFeatured: true, createdAt: '2024-12-01', year: 2020, km: 45000, color: 'Beyaz' },
             { id: '2', title: 'Kadıköy Satılık 3+1', description: 'Deniz manzaralı', price: 8500000, category: 'Emlak', subCategory: 'Konut', city: 'İstanbul', district: 'Kadıköy', images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800'], sellerId: '2', status: 'approved', views: 890, isFeatured: true, createdAt: '2024-12-05' },
             { id: '3', title: 'iPhone 15 Pro Max', description: '1 ay kullanıldı', price: 68000, category: 'İkinci El ve Sıfır Alışveriş', subCategory: 'Cep Telefonu & Aksesuar', city: 'Ankara', district: 'Çankaya', images: ['https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800'], sellerId: '1', status: 'approved', views: 2100, isFeatured: true, createdAt: '2024-12-10', latitude: 39.9334, longitude: 32.8597 }
         ]);
@@ -112,8 +112,9 @@ async function runMigrations() {
 sequelize.sync().then(async () => {
     try {
         await require('./migrate_latlong')();
+        await require('./migrate_filters')();
     } catch (e) {
-        console.error("LatLong migration failed:", e);
+        console.error("Migration failed:", e);
     }
     seedData();
     runMigrations();
@@ -271,13 +272,22 @@ app.get('/api/categories/:slug', async (req, res) => {
 
 // Listings
 app.get('/api/listings', async (req, res) => {
-    const { search, category, subCategory, city, minPrice, maxPrice, sort } = req.query;
+    const { search, category, subCategory, city, minPrice, maxPrice, sort, minYear, maxYear, minKm, maxKm, color } = req.query;
     const where = { status: 'approved' };
 
     if (search) where.title = { [Op.like]: `%${search}%` };
     if (city) where.city = city;
     if (minPrice) where.price = { ...where.price, [Op.gte]: parseInt(minPrice) };
-    if (maxPrice) where.price = { ...where.price, ...((where.price || {}).lte ? {} : { [Op.lte]: parseInt(maxPrice) }) }; // Combine logic if needed
+    if (maxPrice) where.price = { ...where.price, ...((where.price || {}).lte ? {} : { [Op.lte]: parseInt(maxPrice) }) };
+
+    // New Filters
+    if (minYear) where.year = { ...where.year, [Op.gte]: parseInt(minYear) };
+    if (maxYear) where.year = { ...where.year, ...((where.year || {}).lte ? {} : { [Op.lte]: parseInt(maxYear) }) };
+
+    if (minKm) where.km = { ...where.km, [Op.gte]: parseInt(minKm) };
+    if (maxKm) where.km = { ...where.km, ...((where.km || {}).lte ? {} : { [Op.lte]: parseInt(maxKm) }) };
+
+    if (color) where.color = color;
 
     // Category filter is complex due to aliases, simplified here to direct match for SQLite performance
     if (category) {
@@ -298,6 +308,8 @@ app.get('/api/listings', async (req, res) => {
     let order = [['createdAt', 'DESC']];
     if (sort === 'price_asc') order = [['price', 'ASC']];
     if (sort === 'price_desc') order = [['price', 'DESC']];
+    if (sort === 'date_asc') order = [['createdAt', 'ASC']]; // Added date_asc support
+    if (sort === 'date_desc') order = [['createdAt', 'DESC']];
 
     const results = await Listing.findAll({ where, order, include: { model: User, as: 'seller', attributes: ['id', 'name', 'avatar'] } });
     res.json(results);
@@ -340,6 +352,9 @@ app.post('/api/listings', authMiddleware, async (req, res) => {
             status: 'pending', // Default
             ...req.body,
             price: parseInt(req.body.price),
+            year: req.body.year ? parseInt(req.body.year) : null,
+            km: req.body.km ? parseInt(req.body.km) : null,
+            color: req.body.color || null,
             images: req.body.images || []
         });
         res.status(201).json(newListing);
@@ -798,6 +813,9 @@ app.put('/api/listings/:id', authMiddleware, async (req, res) => {
     if (images) listing.images = images;
     if (req.body.latitude) listing.latitude = parseFloat(req.body.latitude);
     if (req.body.longitude) listing.longitude = parseFloat(req.body.longitude);
+    if (req.body.year) listing.year = parseInt(req.body.year);
+    if (req.body.km) listing.km = parseInt(req.body.km);
+    if (req.body.color) listing.color = req.body.color;
 
     // If listing was approved and content changed, set to pending for re-review
     if (listing.status === 'approved' && (title || description || price)) {

@@ -26,6 +26,11 @@ const CategoryPage = () => {
         city: searchParams.get('city') || '',
         minPrice: searchParams.get('minPrice') || '',
         maxPrice: searchParams.get('maxPrice') || '',
+        minYear: searchParams.get('minYear') || '',
+        maxYear: searchParams.get('maxYear') || '',
+        minKm: searchParams.get('minKm') || '',
+        maxKm: searchParams.get('maxKm') || '',
+        color: searchParams.get('color') || '',
         sort: searchParams.get('sort') || 'date_desc',
         search: searchParams.get('search') || ''
     });
