@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { getCategories, getCities, createListing, checkListingEligibility, getPackages } from '../utils/api';
+import imageCompression from 'browser-image-compression';
+import { getCategories, getCities, createListing, checkListingEligibility, getPackages, uploadImage } from '../utils/api';
 import { useAuth } from '../context/AuthContext';
 import MapComponent from '../components/MapComponent';
 import './CreateListingPage.css';
@@ -37,6 +38,7 @@ const CreateListingPage = () => {
     });
 
     const [imageUrls, setImageUrls] = useState(['', '', '', '', '']);
+    const [uploading, setUploading] = useState(false);
     const [gettingLocation, setGettingLocation] = useState(false);
     const [locationError, setLocationError] = useState('');
 
@@ -109,6 +111,36 @@ const CreateListingPage = () => {
             ...prev,
             images: newUrls.filter(url => url.trim() !== '')
         }));
+    };
+
+    const handleFileUpload = async (e, index) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        setUploading(true);
+        try {
+            const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1200,
+                useWebWorker: true
+            };
+
+            const compressedFile = await imageCompression(file, options);
+
+            const uploadFormData = new FormData();
+            uploadFormData.append('image', compressedFile);
+
+            const response = await uploadImage(uploadFormData);
+
+            if (response.data.success) {
+                handleImageUrlChange(index, response.data.url);
+            }
+        } catch (error) {
+            console.error('Resim yükleme hatası:', error);
+            setError('Resim yüklenirken bir hata oluştu. Lütfen tekrar deneyin.');
+        } finally {
+            setUploading(false);
+        }
     };
 
     const validateStep = () => {
@@ -494,13 +526,26 @@ const CreateListingPage = () => {
                                     {imageUrls.map((url, index) => (
                                         <div key={index} className="image-input-group">
                                             <label className="form-label">Görsel {index + 1} URL</label>
-                                            <input
-                                                type="url"
-                                                className="form-input"
-                                                placeholder="https://example.com/image.jpg"
-                                                value={url}
-                                                onChange={(e) => handleImageUrlChange(index, e.target.value)}
-                                            />
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                                <input
+                                                    type="url"
+                                                    className="form-input"
+                                                    placeholder="ya da görsel URL'si girin"
+                                                    value={url}
+                                                    onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                                                    style={{ flex: 1 }}
+                                                />
+                                                <label className={`btn btn-secondary ${uploading ? 'disabled' : ''}`} style={{ whiteSpace: 'nowrap', cursor: 'pointer', marginBottom: 0 }}>
+                                                    {uploading ? '⏳' : '📁 Yükle'}
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => handleFileUpload(e, index)}
+                                                        style={{ display: 'none' }}
+                                                        disabled={uploading}
+                                                    />
+                                                </label>
+                                            </div>
                                             {url && (
                                                 <div className="image-preview">
                                                     <img src={url} alt={`Önizleme ${index + 1}`} onError={(e) => e.target.style.display = 'none'} />

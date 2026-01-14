@@ -10,9 +10,55 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = 'ilan-platformu-secret-key-2024';
 
+// Multer Configuration for File Uploads
+const multer = require('multer');
+const fs = require('fs');
+
+// Ensure uploads directory exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir);
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        // Unique filename: timestamp + random string + extension
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const ext = path.extname(file.originalname);
+        cb(null, 'img-' + uniqueSuffix + ext)
+    }
+});
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit (frontend will compress much lower)
+});
+
 // Middleware
 app.use(cors());
-app.use(express.json({ limit: '50mb' }));
+app.use(express.json({ limit: '50mb' })); // Increased for potential base64 usage, though we prefer multipart
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
+
+// Upload Endpoint
+app.post('/api/upload', upload.single('image'), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'Dosya yüklenemedi.' });
+        }
+        // Return the URL of the uploaded file
+        const protocol = req.protocol;
+        const host = req.get('host');
+        const imageUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
+
+        res.json({ success: true, url: imageUrl });
+    } catch (error) {
+        console.error('Upload Error:', error);
+        res.status(500).json({ message: 'Resim yüklenirken hata oluştu.' });
+    }
+});
 
 // ==================== INITIAL CONFIG & SEEDING ====================
 const DEFAULT_PASSWORD = '123456';

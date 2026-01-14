@@ -90,6 +90,9 @@ export const recalculateUserBalance = (userId) => api.post(`/admin/recalculate-b
 
 // Utility
 export const getCities = () => api.get('/cities');
+export const uploadImage = (formData) => api.post('/upload', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+});
 
 export default api;
 
