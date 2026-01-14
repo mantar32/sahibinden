@@ -109,7 +109,12 @@ async function runMigrations() {
 }
 
 // Call migrations after connection
-sequelize.sync().then(() => {
+sequelize.sync().then(async () => {
+    try {
+        await require('./migrate_latlong')();
+    } catch (e) {
+        console.error("LatLong migration failed:", e);
+    }
     seedData();
     runMigrations();
 });
